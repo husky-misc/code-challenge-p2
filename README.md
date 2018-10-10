@@ -14,6 +14,11 @@ docker-compose build
 docker-compose up
 ```
 
+## Run specs
+```
+bundle exec rspec
+```
+
 ## Deploy
 
 1. Build image `docker build -t lekaverta-husky-challenge .`
