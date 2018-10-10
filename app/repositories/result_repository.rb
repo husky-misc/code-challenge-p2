@@ -1,0 +1,18 @@
+class ResultRepository
+  KEY = 'RESULTS'.freeze
+
+  def initialize(adapter = Adapters::Redis)
+    @adapter = adapter
+  end
+
+  def all
+    list = @adapter.get_all(KEY)
+    @adapter.flush(KEY)
+
+    list
+  end
+
+  def save(results)
+    @adapter.add(KEY, results)
+  end
+end
