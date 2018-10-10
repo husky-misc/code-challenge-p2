@@ -3,10 +3,8 @@ module Api::V1
     include Concerns::MediaType
 
     def create
-      params[:input].each do |row|
-        item = Item.new(item_attrs(row))
-        repository.save(item.result)
-      end
+      repository = ResultRepository.new
+      repository.save(items.collect(&:result))
 
       render(nothing: true, status: :no_content)
     rescue ArgumentError => error
@@ -17,19 +15,19 @@ module Api::V1
 
     private
 
-    def item_attrs(row)
+    def items
+      params[:input].map { |row| map_item(row) }
+    end
+
+    def map_item(row)
       splited_row = row.split(':')
       splited_last_slice_row = splited_row.last.strip.split(',')
 
-      {
+      Item.new({
         array: splited_row.first.split(' ').map { |item| Integer(item) },
         circular_right_rotation: Integer(splited_last_slice_row.first),
         index: Integer(splited_last_slice_row.second)
-      }
-    end
-
-    def repository
-      @repository ||= ResultRepository.new
+      })
     end
   end
 end

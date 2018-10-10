@@ -4,8 +4,8 @@ module Adapters
       attr_writer :client
     end
 
-    def self.add(key, value)
-      @client.rpush(key, value)
+    def self.add(key, values)
+      @client.rpush(key, values)
     end
 
     def self.get_all(key)

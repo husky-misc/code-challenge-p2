@@ -12,7 +12,7 @@ class ResultRepository
     list
   end
 
-  def save(result)
-    @adapter.add(KEY, result)
+  def save(results)
+    @adapter.add(KEY, results)
   end
 end

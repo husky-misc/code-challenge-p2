@@ -7,8 +7,8 @@ RSpec.describe Api::V1::ComputeController, type: :request do
   describe '#show' do
     before(:each) do
       repository = ResultRepository.new
-      repository.save(123)
-      repository.save(321)
+      repository.save([123, 321])
+      repository.save(3)
     end
 
     it 'returns success' do
@@ -20,7 +20,7 @@ RSpec.describe Api::V1::ComputeController, type: :request do
     it 'returns results computed' do
       get path
 
-      expect(response.body).to eq('{"data":{"results":["123","321"]}}')
+      expect(response.body).to eq('{"data":{"results":["123","321","3"]}}')
     end
 
     it 'clean results after one request' do
