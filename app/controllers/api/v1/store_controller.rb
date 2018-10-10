@@ -1,5 +1,7 @@
 module Api::V1
   class StoreController < ApplicationController
+    include Concerns::MediaType
+
     def create
       params[:input].each do |row|
         item = Item.new(item_attrs(row))

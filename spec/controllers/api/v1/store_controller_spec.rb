@@ -19,7 +19,6 @@ RSpec.describe Api::V1::StoreController, type: :request do
 
       expect(response.status).to eq(204)
     end
-    require 'fakeredis'
 
     it 'initializes Item`s correctly' do
       expect(Item).to receive(:new).with(array: [*1..4], circular_right_rotation: 2, index: 2).once.and_call_original

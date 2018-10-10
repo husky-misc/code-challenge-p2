@@ -1,13 +1,15 @@
 class ResultRepository
   KEY = 'RESULTS'.freeze
 
-  def initialize(redis_adapter = Adapters::Redis)
-    @adapter = redis_adapter
+  def initialize(adapter = Adapters::Redis)
+    @adapter = adapter
   end
 
   def all
-    @adapter.get_all(KEY)
+    list = @adapter.get_all(KEY)
     @adapter.flush(KEY)
+
+    list
   end
 
   def save(result)
