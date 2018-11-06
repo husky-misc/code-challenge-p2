@@ -27,6 +27,14 @@ gem 'mongoid', '~> 6.2.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails', '~> 3.6'
+  gem 'database_cleaner'
+  gem 'rb-readline'
+  gem 'pry-rails'
+end
+
+group :test do
+  gem 'mongoid-rspec', git: 'https://github.com/mongoid-rspec/mongoid-rspec.git'
 end
 
 group :development do
