@@ -1,4 +1,5 @@
 class Api::V1::DataController < ApplicationController
+  before_action :validate_data_params
   
   def store
     @data = Datum.create(data_params)
@@ -9,17 +10,26 @@ class Api::V1::DataController < ApplicationController
     end
   end
 
-  def data_params
-    filter_input_params(params.require(:input))
+  private
+  def validate_data_params
+    begin
+      data_params
+    rescue
+      render json: {msg:  'Wrong input format'}, status: :bad_request
+    end
   end
 
-  def filter_input_params(input_params)
+  def data_params
+    format_input_params(params.require(:input))
+  end
+
+  def format_input_params(input_params)
     input_params.map do |i|
-      filter_input_param(i)
+      format_input_param(i)
     end
   end
   
-  def filter_input_param(input_params)
+  def format_input_param(input_params)
     content, extra = input_params.split(":")
     rotations, index = extra.split(",")
     {
