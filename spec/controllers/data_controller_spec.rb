@@ -63,4 +63,15 @@ RSpec.describe Api::V1::DataController, type: :controller do
       end
     end
   end
+
+  describe "GET #compute" do
+    let!(:data) { create_list(:datum, 2) }
+
+    it "returns http success" do
+      request.content_type = 'application/json'
+      get :compute
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("[3,3]")
+    end
+  end
 end
