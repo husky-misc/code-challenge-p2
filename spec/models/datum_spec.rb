@@ -9,10 +9,7 @@ RSpec.describe Datum, type: :model do
 
   it "can be created from a list" do
     expect do
-      Datum.create([
-        {:content=> [1,2], :index => 2, :rotations => 1}, 
-        {:content=> [3,4], :index => 1, :rotations => 2},
-      ])
+      create_list(:datum, 2)
     end.to change { Datum.count }.by(2)
   end
 end

@@ -31,6 +31,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'rb-readline'
   gem 'pry-rails'
+  gem 'factory_bot_rails'
 end
 
 group :test do

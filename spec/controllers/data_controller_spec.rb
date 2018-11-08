@@ -4,10 +4,11 @@ RSpec.describe Api::V1::DataController, type: :controller do
 
   describe "POST #store" do
 
-    let(:valid_json_params) { { input: [
-      "1 2 3 4: 1,3",
-      "1 2 3 5: 0,0"
-    ]} }
+    let(:valid_json_params) { { 
+      input: [
+        "1 2 3 4: 1,3",
+        "1 2 3 5: 0,0"
+      ]} }
 
     context 'when the input params are valid and the content type is json' do
 
