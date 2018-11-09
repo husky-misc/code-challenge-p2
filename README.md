@@ -48,3 +48,11 @@ data: {
   "result": [1,1]
 }
 ```
+
+There is also a `/history` endpoint available, where all the previously computed data will be returned.
+
+```
+curl -i -X GET "http://localhost:3000/api/v1/history" \
+-H 'Accept: application/json' \
+-H 'Content-Type: application/json'
+```
