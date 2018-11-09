@@ -10,9 +10,11 @@ RSpec.describe Api::V1::DataController, type: :controller do
         "1 2 3 5: 0,0"
       ]} }
 
-    context 'when the input params are valid and the content type is json' do
-
-      before { request.content_type = 'application/json' }
+    context 'when the input params are valid and the request headers are correct' do
+      before do 
+        request.content_type = 'application/json'
+        request.headers["accept"] = 'application/json'
+      end
 
       it "returns http success" do
         post :store, params: valid_json_params
@@ -27,10 +29,29 @@ RSpec.describe Api::V1::DataController, type: :controller do
       end
     end
 
-    context 'when the input params are valid and the content type is not defined' do 
+    context 'when request format is not defined' do 
       it "returns http unsupported media type" do
         post :store, params: valid_json_params
         expect(response).to have_http_status(:unsupported_media_type)
+      end
+      
+      it "does not create data" do
+        expect do
+          post :store, params: valid_json_params
+        end.not_to change { Datum.count }
+      end
+    end
+
+    context 'when content type is not defined' do 
+      it "returns http unsupported media type" do
+        post :store, params: valid_json_params
+        expect(response).to have_http_status(:unsupported_media_type)
+      end
+
+      it "does not create data" do
+        expect do
+          post :store, params: valid_json_params
+        end.not_to change { Datum.count }
       end
     end
 
@@ -50,14 +71,17 @@ RSpec.describe Api::V1::DataController, type: :controller do
   
       let!(:empty_params) { { } }
 
-      it "returns http wrong format" do
+      before do
         request.content_type = 'application/json'
+        request.headers["accept"] = 'application/json'
+      end
+
+      it "returns http wrong format" do
         post :store, params: malformed_params
         expect(response).to have_http_status(:bad_request)
       end
 
       it "returns http wrong format" do
-        request.content_type = 'application/json'
         post :store, params: empty_params
         expect(response).to have_http_status(:bad_request)
       end
@@ -67,8 +91,12 @@ RSpec.describe Api::V1::DataController, type: :controller do
   describe "GET #compute" do
     let!(:data) { create_list(:datum, 2) }
 
-    it "returns http success" do
+    before do
+      request.headers["accept"] = 'application/json'
       request.content_type = 'application/json'
+    end
+
+    it "returns http success" do
       get :compute
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("[3,3]")
