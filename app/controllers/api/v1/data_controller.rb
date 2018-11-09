@@ -13,7 +13,7 @@ class Api::V1::DataController < ApplicationController
   def compute
     @data = Datum.all
     computed_data = @data.map do |d| 
-      rotated = d.content.rotate d.rotations
+      rotated = d.content.rotate -d.rotations
       rotated[d.index] 
     end
     Datum.delete_all
