@@ -16,8 +16,14 @@ class Api::V1::DataController < ApplicationController
       rotated = d.content.rotate -d.rotations
       rotated[d.index] 
     end
+    History.create({content: computed_data})
     Datum.delete_all
     render json: {result: computed_data}
+  end
+
+  def history
+    @history = History.all.pluck(:content)
+    render json: @history
   end
 
   private
