@@ -16,6 +16,7 @@ class Api::V1::DataController < ApplicationController
       rotated = d.content.rotate d.rotations
       rotated[d.index] 
     end
+    Datum.delete_all
     render json: {result: computed_data}
   end
 

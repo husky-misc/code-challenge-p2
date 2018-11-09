@@ -101,5 +101,11 @@ RSpec.describe Api::V1::DataController, type: :controller do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("[3,3]")
     end
+
+    it "flushes data" do
+      expect do
+        get :compute
+      end.to change { Datum.count }.to(0)
+    end
   end
 end
