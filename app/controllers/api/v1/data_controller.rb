@@ -11,14 +11,8 @@ class Api::V1::DataController < ApplicationController
   end
 
   def compute
-    @data = Datum.all
-    computed_data = @data.map do |d| 
-      rotated = d.content.rotate -d.rotations
-      rotated[d.index] 
-    end
-    History.create({content: computed_data})
-    Datum.delete_all
-    render json: {result: computed_data}
+    result = ComputeService.new.perform
+    render json: {result: result}
   end
 
   def history
