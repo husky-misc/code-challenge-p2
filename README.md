@@ -42,6 +42,7 @@ For example, request-1 may store these data:
 curl -i -X POST "http://localhost:3000/api/v1/store" \
 -H 'Accept: application/json' \
 -H 'Content-Type: application/json' \
+-H 'Authorization: afbadb4ff8485c0adcba486b4ca90cc4' \
 -d '{
   "input": [
       "1 2 3 4: 1,3",
@@ -62,7 +63,8 @@ There is a `/histories` endpoint available, where all the previously computed da
 ```
 curl -i -X GET "http://localhost:3000/api/v1/history" \
 -H 'Accept: application/json' \
--H 'Content-Type: application/json'
+-H 'Content-Type: application/json' \
+-H 'Authorization: afbadb4ff8485c0adcba486b4ca90cc4' \
 ```
 
 Finally, the is a `admin/histories` endpoint which returns the previously computed data, along with the ip of 
@@ -71,5 +73,6 @@ the requester computer and the request's date.
 ```
 curl -i -X GET "http://localhost:3000/api/v1/admin/histories" \
 -H 'Accept: application/json' \
--H 'Content-Type: application/json'
+-H 'Content-Type: application/json' \
+-H 'Authorization: afbadb4ff8485c0adcba486b4ca90cc4' \
 ```
