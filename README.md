@@ -49,10 +49,19 @@ data: {
 }
 ```
 
-There is also a `/history` endpoint available, where all the previously computed data will be returned.
+There is a `/histories` endpoint available, where all the previously computed data will be returned.
 
 ```
 curl -i -X GET "http://localhost:3000/api/v1/history" \
+-H 'Accept: application/json' \
+-H 'Content-Type: application/json'
+```
+
+Finally, the is a `admin/histories` endpoint which returns the previously computed data, along with the ip of 
+the requester computer and the request's date.
+
+```
+curl -i -X GET "http://localhost:3000/api/v1/admin/histories" \
 -H 'Accept: application/json' \
 -H 'Content-Type: application/json'
 ```
