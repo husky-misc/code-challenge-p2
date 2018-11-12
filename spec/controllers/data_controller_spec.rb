@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::DataController, type: :controller do
 
+  let!(:api_key) { ApiKey.create!(access_token: 'afbadb4ff8485c0adcba486b4ca90cc4').access_token }
+
   describe "POST #store" do
 
     let(:valid_json_params) { { 
@@ -10,10 +12,18 @@ RSpec.describe Api::V1::DataController, type: :controller do
         "1 2 3 5: 0,0"
       ]} }
 
+    context 'when a authorization header is not defined' do
+      it "returns http unauthorized" do
+        post :store, params: valid_json_params
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
     context 'when the input params are valid and the request headers are correct' do
       before do 
         request.content_type = 'application/json'
         request.headers["accept"] = 'application/json'
+        request.headers["Authorization"] = api_key
       end
 
       it "returns http success" do
@@ -30,6 +40,7 @@ RSpec.describe Api::V1::DataController, type: :controller do
     end
 
     context 'when request format is not defined' do 
+      before { request.headers["Authorization"] = api_key }
       it "returns http unsupported media type" do
         post :store, params: valid_json_params
         expect(response).to have_http_status(:unsupported_media_type)
@@ -44,6 +55,7 @@ RSpec.describe Api::V1::DataController, type: :controller do
 
     context 'when content type is not defined' do 
       it "returns http unsupported media type" do
+        request.headers["Authorization"] = api_key
         post :store, params: valid_json_params
         expect(response).to have_http_status(:unsupported_media_type)
       end
@@ -58,6 +70,7 @@ RSpec.describe Api::V1::DataController, type: :controller do
     context 'when the input params are valid and the content type is not json' do
       it "returns http unsupported media type" do
         request.content_type = 'text/html' 
+        request.headers["Authorization"] = api_key
         post :store, params: valid_json_params
         expect(response).to have_http_status(:unsupported_media_type)
       end
@@ -72,6 +85,7 @@ RSpec.describe Api::V1::DataController, type: :controller do
       before do
         request.content_type = 'application/json'
         request.headers["accept"] = 'application/json'
+        request.headers["Authorization"] = api_key
       end
 
       it "returns http bad request" do
@@ -88,6 +102,7 @@ RSpec.describe Api::V1::DataController, type: :controller do
       before do
         request.content_type = 'application/json'
         request.headers["accept"] = 'application/json'
+        request.headers["Authorization"] = api_key
       end
 
       it "returns http bad request" do
@@ -100,6 +115,7 @@ RSpec.describe Api::V1::DataController, type: :controller do
       before do
         request.content_type = 'application/json'
         request.headers["accept"] = 'application/json'
+        request.headers["Authorization"] = api_key
       end
 
       it "returns http bad request" do
@@ -115,6 +131,7 @@ RSpec.describe Api::V1::DataController, type: :controller do
     before do
       request.headers["accept"] = 'application/json'
       request.content_type = 'application/json'
+      request.headers["Authorization"] = api_key
     end
 
     it "returns http success" do

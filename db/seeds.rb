@@ -1,0 +1,1 @@
+ApiKey.create!(access_token: 'afbadb4ff8485c0adcba486b4ca90cc4')

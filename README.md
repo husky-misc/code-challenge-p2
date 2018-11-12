@@ -18,6 +18,10 @@ This API receives a list of integers, performs a number of right circular rotati
 
 ` bundle install `
 
+- Seed the database
+
+` rake db:seed `
+
 - Run the application 
 
 ` rails s `
@@ -26,6 +30,10 @@ This API receives a list of integers, performs a number of right circular rotati
 
 ` rspec `
 
+### Auth
+
+By default, it is created a api key with the following access token, which you will have to provide in each request: 
+`afbadb4ff8485c0adcba486b4ca90cc4`
 
 ### Endpoints
 
