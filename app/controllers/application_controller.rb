@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::API
   before_action :restrict_content_type, :restrict_format
-  
-
   private
   def restrict_content_type
     unless request.content_type == 'application/json'
@@ -15,5 +13,4 @@ class ApplicationController < ActionController::API
         render json: {msg:  'Format must be json'}, status: 415  
       end
   end
-
 end
