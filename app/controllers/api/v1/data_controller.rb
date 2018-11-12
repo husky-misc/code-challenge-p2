@@ -11,7 +11,8 @@ class Api::V1::DataController < ApplicationController
   end
 
   def compute
-    result = ComputeService.new.perform
+    computer = ComputeService.new(request.remote_ip)
+    result = computer.perform
     render json: {result: result}
   end
 

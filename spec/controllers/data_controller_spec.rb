@@ -100,5 +100,10 @@ RSpec.describe Api::V1::DataController, type: :controller do
       get :compute
       expect(response).to have_http_status(:ok)
     end
+
+    it "saves the request's IP in History" do
+      get :compute
+      expect(History.first.ip).to eq(request.remote_ip)
+    end
   end
 end

@@ -1,5 +1,9 @@
 class ComputeService
 
+  def initialize(ip = nil)
+    @ip = ip
+  end
+
   def perform
     compute_data
     save_history
@@ -16,7 +20,9 @@ class ComputeService
   end
 
   def save_history
-    History.create({content: @computed_data}) unless @computed_data.empty?
+    unless @computed_data.empty?
+      History.create({content: @computed_data, ip: @ip}) 
+    end
   end
 
   def flush_data
