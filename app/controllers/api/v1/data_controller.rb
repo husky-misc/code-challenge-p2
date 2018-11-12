@@ -39,9 +39,9 @@ class Api::V1::DataController < ApplicationController
     content, extra = input_params.split(":")
     rotations, index = extra.split(",")
     {
-      content: content.split(" ").map(&:to_i), 
-      rotations: rotations.to_i, 
-      index: index.to_i
+      content: content.split(" ").map { |i| Integer(i) }, 
+      rotations: Integer(rotations), 
+      index: Integer(index)
     }
   end
 

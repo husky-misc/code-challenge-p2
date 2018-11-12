@@ -63,26 +63,47 @@ RSpec.describe Api::V1::DataController, type: :controller do
       end
     end 
 
-    context 'when the input params are invalid' do
+    context 'when the input params format is invalid' do
       let!(:malformed_params) { { input: [
         "1 2 3 4",
         "5 6 7 8"
       ]} }
-  
-      let!(:empty_params) { { } }
 
       before do
         request.content_type = 'application/json'
         request.headers["accept"] = 'application/json'
       end
 
-      it "returns http wrong format" do
+      it "returns http bad request" do
         post :store, params: malformed_params
         expect(response).to have_http_status(:bad_request)
       end
+    end
 
-      it "returns http wrong format" do
-        post :store, params: empty_params
+    context "when the input is text" do
+      let!(:text_params) { { input: [
+        "a b c d: b, a"
+      ]} }
+
+      before do
+        request.content_type = 'application/json'
+        request.headers["accept"] = 'application/json'
+      end
+
+      it "returns http bad request" do
+        post :store, params: text_params
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context "when the input is empty" do
+      before do
+        request.content_type = 'application/json'
+        request.headers["accept"] = 'application/json'
+      end
+
+      it "returns http bad request" do
+        post :store, params: { } 
         expect(response).to have_http_status(:bad_request)
       end
     end
