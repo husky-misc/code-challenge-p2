@@ -2,12 +2,8 @@ class Api::V1::DataController < ApplicationController
   before_action :validate_data_params, only: [:store]
   
   def store
-    @data = Datum.create(data_params)
-    if @data
-      render json: @data, status: 201
-    else
-      render json: @data.errors
-    end
+    @data = DataService.new(data_params).perform
+    render json: { success: @data.success, errors: @data.errors }, status: 201
   end
 
   def compute
