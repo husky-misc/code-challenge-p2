@@ -16,11 +16,6 @@ class Api::V1::DataController < ApplicationController
     render json: {result: result}
   end
 
-  def history
-    @history = History.all.pluck(:content)
-    render json: @history
-  end
-
   private
   def validate_data_params
     begin

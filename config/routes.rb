@@ -4,7 +4,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'store' => 'data#store'
       get 'compute' => 'data#compute'
-      get 'history' => 'data#history'
+      get 'histories' => 'histories#index'
+      get 'admin/histories' => 'histories#admin_index'
     end
   end
 end
