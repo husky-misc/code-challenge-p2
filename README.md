@@ -70,5 +70,3 @@ It may count extra points on your evaluation. It's not obligated althougth it's 
 - Store and create an endpoint to return all previous results from `/compute`.
 - Enable pagination (5 per request) when return previous results from `/compute`.
 - Create an `Authorization` Header or API keys to ensure that only authorized users request data on your API.
-- Deploy it at any free cloud service so we don't need to deploy ourselves in order to test your code.
-- Create an admin page where the user can see the computed ips trougth `/compute` including when it was computed and so on.
