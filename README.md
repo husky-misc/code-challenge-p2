@@ -1,8 +1,6 @@
-# Husky dev Ruby challenge Season 2
-
 ### Description and general information
 
-Create an API that receives a list of integers, perform a number of right circular rotation and return the value of the element at a given index. One rotation operation moves the last array element to the first position and shifts all remaining elements right one.
+Create an API that receives, store and compute 7-bit ASCII text. This text will consist in a IP, followed by a column and a sequence of numbers. i.e `127.0.0.1:0,11,23,44,50`.
 
 ### Requirements
 
@@ -10,27 +8,17 @@ Create an API that receives a list of integers, perform a number of right circul
 
 - You should return a 415 Unsupported Media Type response code if the consumer attempt to use a different URL suffix or leave out the Content-Type header.
 
-- Your program should handle errors, including malformed input; invalid input, appropriately and should be of a sufficient quality that it can run on a production Linux system.
+- Your program should handle errors, including malformed input, appropriately and should be of a sufficient quality that it can run on a production Linux system. 
 
-- It may include deployment instructions depending on wich technology you decide to use.
+- It may include deployment instructions depending on wich technology you decide to use. 
 
 - Follow Restful principles when design your API.
 
-- This API is subject to a real-time constraint.
-
-### Constraints
-
-- The number of rotation can be up to 10^5
-
-- No number will be bigger than 10^5
-
-- The number of elements in the array can be up to 500
-
 ### Endpoints and expected behavior
 
-#1: Create an endpoint `/store` that receives and store an array. Each request should include a data line that may consist of the list of integers, followed by a colon, followed by two comma-separated numbers: the number of righ circular rotation and the index to be returned. Feel free to design the submmited JSON as your back-end object should look like.
+#1: Create an endpoint `/store` that receives and store 7-bit ASCII text. Each request, should include a data line that may consist of an IP address, followed by a colon, followed by a comma-separated list of numbers. Feel free to design the submmited JSON as your back-end object should look like.
 
-#2: This API should also have an endpoint called `/compute`. When requested, all available data submitted until this request should be executed and a list of comma-separated integers returned with the value of the element at the given index of each array.
+#2: This API should also have an endpoint called `/compute`. When requested, all available data submitted until this request should be joined on IP address format and the numbers from each stored data should be appended and returned, sorted and without duplicates. The results should be send as the IP address followed by a colon, followed by a comma separated list of the numbers as JSON.
 
 For example, request-1 may store these data:
 ```
@@ -38,9 +26,9 @@ curl -i -X POST "http://localhost:3000/api/v1/store" -H "Authorization: jVbwTGNy
 -H 'Accept: application/json' \
 -H 'Content-Type: application/json' \
 -d '{
-  "input": [
-      "1 2 3 4: 1,3",
-      "1 2 3 5: 0,0"
+  "ip_list": [
+      "1.2.3.4: 1,3,4",
+      "1.2.3.5: 9,8,7,6"      
   ]
 }'
 ```
@@ -51,21 +39,25 @@ curl -i -X POST "http://localhost:3000/api/v1/store" -H "Authorization: jVbwTGNy
 -H 'Accept: application/json' \
 -H 'Content-Type: application/json' \
 -d '{
-  "input": [
-      "1 2 3 4: 2,2",
-      "1: 10,0"
+  "ip_list": [
+      "1.2.3.4: 4,5,6",
+      "1.2.3.6: 1,1,1"
   ]
 }'
-```
+``` 
 
 At this point, if I request `/compute`, the JSON return should have the data:
 ```
 data: {
-  "result": [3, 1, 1, 1]
+  "ip_code": [
+     "1.2.3.4": "1,3,4,5,6",
+     "1.2.3.5": "6,7,8,9",
+     "1.2.3.6": "1"
+  ]
 }
 ```
 
-Important:
+Important: 
 - All `/store` data existing until the `/compute` call should be flushed after computing.
 - Make sure to cover your code (test suite).
 - You should submit a PR not late 5 days after fork this repository.
